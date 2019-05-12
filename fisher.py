@@ -7,8 +7,11 @@
 @File    : fisher.py
 @Software: PyCharm
 """
+import json
 
 from flask import Flask, make_response
+from helper import is_isbn_or_key
+from yushubook import YuShuBook
 
 app = Flask(__name__)
 
@@ -23,13 +26,13 @@ def search(q, page):
     page
     :return:
     """
-    isbn_or_key = 'key'
-    if len(q) == 13 and q.isdigtal():
-        isbn_or_key = 'isbn'
-    short_q = q.replace('-','')
-    if '-' in q and len(short_q) == 10 and short_q.isdigtal():
-        isbn_or_key = 'isbn'
-    pass
+    isbn_or_key = is_isbn_or_key(q)
+    if isbn_or_key == 'isbn':
+       result = YuShuBook.search_by_isbn(q)
+    else:
+       result = YuShuBook.search_by_keyword(q)
+    # dict序列化,python自带的json库
+    return json.dumps(result), 200, {'content-type':'application/json'}
 
 
 
