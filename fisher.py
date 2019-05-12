@@ -16,23 +16,23 @@ app = Flask(__name__)
 def hello():
     return "hello,征信指标"
 
-def hello2bing():
-    return "hello", 301, {"content-type":"text/plain","location":"https://wwww.bing.com"}
+@app.route("/search/<q>/<page>")
+def search(q, page):
+    """
+    q
+    page
+    :return:
+    """
+    isbn_or_key = 'key'
+    if len(q) == 13 and q.isdigtal():
+        isbn_or_key = 'isbn'
+    short_q = q.replace('-','')
+    if '-' in q and len(short_q) == 10 and short_q.isdigtal():
+        isbn_or_key = 'isbn'
+    pass
 
-def hello2json():
-    return "hello",200,{'content-type':'application/json'}
 
-def hello2bing_with_make_response():
-    headers={
-        "content-type": "text/plain",
-        "location": "https://wwww.bing.com"
-    }
-    return make_response("hello make response", 302, headers)
 
-app.add_url_rule("/hello/", view_func=hello)
-app.add_url_rule("/hello2bing/", view_func=hello2bing)
-app.add_url_rule("/hello2json/", view_func=hello2json)
-app.add_url_rule("/hello2bingv2/", view_func=hello2bing_with_make_response)
 
 app.config.from_object("config")
 
