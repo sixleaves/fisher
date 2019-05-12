@@ -9,7 +9,7 @@
 """
 import json
 
-from flask import Flask, make_response
+from flask import Flask, jsonify
 from helper import is_isbn_or_key
 from yushubook import YuShuBook
 
@@ -28,12 +28,12 @@ def search(q, page):
     """
     isbn_or_key = is_isbn_or_key(q)
     if isbn_or_key == 'isbn':
-       result = YuShuBook.search_by_isbn(q)
+       result = YuShuBook.search_by_isbn(isbn=q)
     else:
        result = YuShuBook.search_by_keyword(q)
     # dict序列化,python自带的json库
-    return json.dumps(result), 200, {'content-type':'application/json'}
-
+    # return json.dumps(result), 200, {'content-type':'application/json'}
+    return jsonify(result)
 
 
 

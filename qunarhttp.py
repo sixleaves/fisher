@@ -4,11 +4,13 @@
 @Time    : 2019/5/12 11:25 PM
 @Author  : sweetcs
 @Site    : 
-@File    : http.py
+@File    : qunarhttp.py
 @Software: PyCharm
 """
 import requests
-class Http:
+
+
+class QunarHttp:
 
     @staticmethod
     def get(url, return_json=True):
